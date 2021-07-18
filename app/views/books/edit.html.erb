@@ -1,0 +1,25 @@
+<h2>Editing Book</h2>
+
+
+<!-- form_with部分 -->
+<%= form_with model: @book,url:"/books/#{@book.id}", local: true do |f| %>
+  <%# ここからエラーメッセージ %>
+  <% if @book.errors.any? %>
+    <%= @book.errors.count %> errors prohibited this book from being saved:<br>
+      <% @book.errors.full_messages.each do |message| %>
+        ・<%= message %><br>
+      <% end %>
+  <% end %>
+  <%# ここまでエラーメッセージ %>
+  <h4>Title</h4>
+  <%= f.text_field :title %>
+
+  <h4>Opinion</h4>
+  <%= f.text_area :opinion %>
+
+  <div><%= f.submit 'Update Book' %></div>
+
+<% end %>
+<%= link_to "Show", book_path(@book.id) %>
+<%= '|' %>
+<%= link_to "Back", "/books" %>
