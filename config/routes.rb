@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   #indexからdestroyまでの7つのアクション(RESTfulなURL)
   resources :books
 
-  resources :users, only: [:show, :index]
+  resources :users, only: [:show, :index, :edit, :update]
   resources :user_image, only: [:edit, :update,:destroy]
 
 end

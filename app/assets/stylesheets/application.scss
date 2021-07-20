@@ -25,3 +25,14 @@
 .flex > :first-child {
   margin-right: auto;
 }
+.notice {
+  color: green;
+}
+.alert {
+  color: red;
+}
+
+.hl:link, .hl:visited, .hl:hover, .hl:active {
+  color: white;
+  text-decoration:none
+}

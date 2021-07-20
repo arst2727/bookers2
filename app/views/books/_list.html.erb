@@ -1,0 +1,31 @@
+<h2>User Info</h2>
+<%= attachment_image_tag(user, :profile_image, fallback: "no_image.png", size: "100x100") %>
+<table class="table">
+<tr></tr>
+<tr><th>name</th><td><%= user.name %></td></tr>
+<tr></tr>
+<tr><th>introduction</th><td><%= user.introduction %></td></tr>
+</table>
+<%= link_to edit_user_path(user.id), class: "btn btn-outline-secondary btn-block" do %>
+  <i class="fas fa-user-cog"></i>
+<% end %>
+<h2>New book</h2>
+<!-- form_with部分 -->
+<%= form_with model: new_book,local: true do |f| %>
+    <%# ここからエラーメッセージ %>
+    <% if new_book.errors.any? %>
+      <%= new_book.errors.count %> errors prohibited this book from being saved:<br>
+        <% new_book.errors.full_messages.each do |message| %>
+          ・<%= message %><br>
+        <% end %>
+    <% end %>
+    <%# ここまでエラーメッセージ %>
+    <div>Title</div>
+    <div><%= f.text_field :title %></div>
+
+    <div>Opinion</div>
+    <div><%= f.text_area :body%></div>
+    <button type="submit" class="btn btn-success">
+    <% f.submit %>Create Book
+    </button>
+<% end %>

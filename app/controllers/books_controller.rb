@@ -1,11 +1,14 @@
 class BooksController < ApplicationController
   def index
     @books = Book.all
-    @book = Book.new #一覧と投稿を同じページに
+    @new_book = Book.new #一覧と投稿を同じページに
+    @current_user = current_user
   end
 
   def show
     @book = Book.find(params[:id])
+    @user = @book.user
+    @new_book = Book.new
   end
 
   def new
@@ -13,12 +16,12 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.new(book_params)
+    @new_book = Book.new(book_params)
 
-    @book.user = current_user
-    if @book.save
+    @new_book.user = current_user
+    if @new_book.save
       flash[:success] = 'Book was successfully created.'
-      redirect_to books_path
+      redirect_to book_path(@new_book.id)
     else #createに失敗したとき（titleとopinionどちらか一方でも無しの場合）
       @books = Book.all
       render :index
@@ -27,6 +30,11 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    if @book.user_id == current_user.id
+      render :edit
+    else
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def update
@@ -54,6 +62,6 @@ class BooksController < ApplicationController
 
   private
   def book_params
-    params.require(:book).permit(:title, :opinion)
+    params.require(:book).permit(:title, :body)
   end
 end
