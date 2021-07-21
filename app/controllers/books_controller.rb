@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+
   def index
     @books = Book.all
     @new_book = Book.new #一覧と投稿を同じページに
@@ -9,10 +10,6 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     @new_book = Book.new
-  end
-
-  def new
-    # @book = Book.new
   end
 
   def create
@@ -33,7 +30,7 @@ class BooksController < ApplicationController
     if @book.user_id == current_user.id
       render :edit
     else
-      redirect_to user_path(current_user.id)
+      redirect_to books_path
     end
   end
 
